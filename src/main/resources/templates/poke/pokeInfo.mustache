@@ -1,0 +1,98 @@
+<div id="pokeInfo" class="sideView hideView">
+    <div class="trainerMemo">
+        <div class="title">포켓몬 정보</div>
+        <div class="pokemonInfo">
+            <div class="pokemonImage">
+                <img id="IpokemonImage" src="" alt="포켓몬 이미지">
+            </div>
+            <div class="pokemonDetails">
+                <p id="IpokemonName">이름: </p>
+                <p id="IpokemonNumber">번호: </p>
+                <p id="IpokemonGender">성별: </p>
+                <p id="IpokemonType">타입: </p>
+                <p id="IpokemonHeight">키: </p>
+                <p id="IpokemonWeight">몸무게: </p>
+            </div>
+        </div>
+        <a onclick="common.showView('myPoke');" class="backButton">돌아가기</a>
+    </div>
+</div>
+
+
+<script>
+    function viewDetail(
+        pokemonName,
+        pokemonId,
+        pokemonGender,
+        pokemonImage,
+        pokemonTypes,
+        pokemonHeight,
+        pokemonWeight
+    ){
+        console.log(pokemonName);
+        console.log(pokemonId);
+        console.log(pokemonImage);
+        console.log(pokemonGender);
+        console.log(pokemonTypes);
+        console.log(pokemonHeight);
+        console.log(pokemonWeight);
+        pokemonTypes = pokemonTypes.split(','); // 여러 타입을 받아옴
+        // 타입을 한글로 변환하는 맵
+        const typeTranslations = {
+            "fire": "불꽃",
+            "water": "물",
+            "grass": "풀",
+            "electric": "전기",
+            "ice": "얼음",
+            "fighting": "격투",
+            "poison": "독",
+            "ground": "땅",
+            "flying": "비행",
+            "psychic": "에스퍼",
+            "bug": "벌레",
+            "rock": "바위",
+            "ghost": "고스트",
+            "dragon": "드래곤",
+            "normal": "노말"
+        };
+
+        // 1세대 포켓몬 타입별 배경색과 테두리 색상
+        const typeStyles = {
+            "불꽃": { background: "#ffe5e5", border: "#ff4500" },
+            "물": { background: "#e5f7ff", border: "#1e90ff" },
+            "풀": { background: "#e5ffe5", border: "#32cd32" },
+            "전기": { background: "#fef9c3", border: "#ffd700" },
+            "얼음": { background: "#e0f7ff", border: "#00bfff" },
+            "격투": { background: "#ffe5e5", border: "#ff6347" },
+            "독": { background: "#f0e5ff", border: "#9932cc" },
+            "땅": { background: "#f0e5d1", border: "#d2b48c" },
+            "비행": { background: "#f0f8ff", border: "#87ceeb" },
+            "에스퍼": { background: "#ffe5f0", border: "#ff1493" },
+            "벌레": { background: "#f0ffe5", border: "#9acd32" },
+            "바위": { background: "#e5e5e5", border: "#b0c4de" },
+            "고스트": { background: "#f0e5ff", border: "#8a2be2" },
+            "드래곤": { background: "#e5e0ff", border: "#7b68ee" },
+            "노말": { background: "#f5f5f5", border: "#dcdcdc" }
+        };
+
+        // 여러 타입에 대해 처리하기 위해 타입을 순차적으로 한글로 변환
+        const translatedTypes = pokemonTypes.map(type => typeTranslations[type] || type);
+
+        // 여러 타입에 맞는 배경색과 테두리 색상 적용
+        const combinedBackgroundColor = translatedTypes.map(type => typeStyles[type]?.background).join(' ');
+        const combinedBorderColor = translatedTypes.map(type => typeStyles[type]?.border).join(' ');
+
+        // 배경색과 테두리 색상 적용
+        document.body.style.backgroundColor = combinedBackgroundColor || "#e0f0ff";
+        document.body.style.border = `2px solid ${combinedBorderColor || "#dcdcdc"}`;
+
+        // 포켓몬 정보 업데이트
+        document.getElementById("IpokemonName").textContent = `이름: ${pokemonName}`;
+        document.getElementById("IpokemonNumber").textContent = `번호: ${pokemonId}`;
+        document.getElementById("IpokemonGender").textContent = `${pokemonGender}`;
+        document.getElementById("IpokemonType").textContent = `타입: ${translatedTypes.join(", ")}`;
+        document.getElementById("IpokemonHeight").textContent = `키: ${pokemonHeight}`;
+        document.getElementById("IpokemonWeight").textContent = `몸무게: ${pokemonWeight}`;
+        document.getElementById("IpokemonImage").src = pokemonImage;
+    }
+</script>

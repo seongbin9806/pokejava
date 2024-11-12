@@ -1,0 +1,249 @@
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+a,
+button {
+	cursor: pointer;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+	display: block;
+}
+
+html {}
+
+body {	
+    line-height: 1;
+    overflow-x: hidden;    
+    height: 100vh;
+    width: 100%;    
+    font-weight: 400;
+}
+
+ol,
+ul {
+	list-style: none;
+}
+
+blockquote,
+q {
+	quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+input:focus {
+	outline: none;
+}
+
+a {
+	color: #40424c;
+	text-decoration: none !important;
+}
+
+@font-face {
+    font-family: 'CookieRun-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body{
+    font-family: 'CookieRun-Regular', sans-serif;
+}
+
+.warning{
+    border: 1px solid #FF4C4C !important;
+}
+
+.warningT{
+    color: #FF4C4C !important;
+}
+
+#mainContainer{
+    /* width: 1200px; */
+    width: 100%;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+/*alert디자인(swal2)*/
+.swal2-container {
+	z-index: 99999 !important;
+}
+
+.swal2-popup {
+	max-width: 300px !important;
+	width: calc(100% - 80px) !important;
+	min-width: 280px !important;
+	font-size: 14px !important;
+	padding: 35px !important;
+}
+
+.swal2-title {
+	font-size: 1.15em !important;
+	margin-bottom: 10px !important;
+}
+
+.swal2-html-container {
+	font-size: 1em !important;
+	line-height: 1.4em !important;
+	margin: 0 !important;
+	word-break: keep-all !important;
+}
+
+.swal2-actions {
+	width: 100 !important%;
+	margin-top: 20px !important;
+	flex-wrap: nowra !importantp;
+	flex-direction: row-reverse !important;
+}
+
+.swal2-actions button {
+	width: 70px !important;
+	border-radius: 4px !important;
+	font-weight: 400;
+	line-height: 30px !important;
+	height: 30px !important;
+	padding: 0 !important;
+	border: 0 !important;
+	margin: 0 2px !important;
+}
+
+.swal2-actions button:hover,
+.swal2-actions button:focus {
+	outline: none !important;
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+.swal2-styled.swal2-confirm {
+	background: black !important;
+	color: #fff !important;
+	border-radius: 4px !important;
+}
+
+.swal2-styled.swal2-deny {
+	background: #C4C4C4 !important;
+	color: #fff !important;
+	border-radius: 4px !important;
+}
+
+.swal2-actions:not(.swal2-loading) .swal2-styled {
+	opacity: 0.9 !important;
+}
+
+.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+	background-image: none !important;
+	opacity: 1 !important;
+}
+
+@media screen and (max-width:550px) {
+	/*
+	input {
+		width: 100%;
+	}
+*/
+}
+
+/* toast */
+
+#toast {
+    display: none;
+    position: fixed;
+    top: -100px; /* Start position out of view */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 12px 16px;    
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    transition: top 0.5s ease-in-out;
+    text-align: center;
+}
+
+/* loading */
+
+#loadingImg{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index:1051;
+}
+
+#loadingImg img{
+    width:80px;
+    border-radius: 30%;
+}
+    
+#mask{
+    width: 100%;
+    height: 100vh;
+    opacity: 0.3;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #898989;
+}
+
+/* page */
+
+#page{
+    margin: 30px 0;
+    text-align: center;
+}
+
+#page .link{
+    background: #F4F4F4;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    font-weight: 500;
+    margin: 0 2px;
+}
+
+#page .link.active{
+    background: #061310;
+    color: #fff;
+    font-weight: bold;
+}
+
+@media (max-width: 800px) {
+    #toast{
+        width: 80%;
+        text-align: center;
+    }
+}
