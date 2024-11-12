@@ -1,0 +1,13 @@
+{{>layouts/header}}
+<h1>Random Pokemon</h1>
+
+<div>
+    <p><strong>이름:</strong> {{pokemon.name}}</p>
+    <img src="{{pokemon.imageUrl}}" alt="{{pokemon.name}} 이미지입니다."/>
+    <p><strong>키:</strong> {{pokemon.height}}</p>
+    <p><strong>무게:</strong> {{pokemon.weight}}</p>
+    <p><strong>속성:</strong> {{#pokemon.types}}<span>{{.}}</span> {{/pokemon.types}}</p>
+    <p><strong>특성:</strong> {{#pokemon.abilities}}<span>{{.}}</span> {{/pokemon.abilities}}</p>
+    <!--    <p><strong>기술:</strong> {{#pokemon.moves}}<span>{{.}}</span> {{/pokemon.moves}}</p>-->
+</div>
+{{>layouts/footer}}

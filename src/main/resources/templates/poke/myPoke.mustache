@@ -1,0 +1,88 @@
+<div id="myPoke" class="sideView hideView">
+    <div class="sidebar">
+        <h2 id="pokemonName">포켓몬 이름</h2>
+        <img id="pokemonImage" src="" alt="포켓몬 이미지" style="display:none;">
+        <p id="pokemonNumber">No.000</p>
+        <p id="pokemonGender">성별: 미정</p>
+        <button id="detailsButton" onclick="viewDetails()">자세히 보기</button>
+        <button onclick="releasePokemon()">놓아준다</button>
+        <button onclick="common.showView('field')">돌아가기</button>
+    </div>
+
+    <!-- 포켓몬 저장 박스 -->
+    <div class="storageBox" id="storageBox"></div>
+</div>
+
+<script>
+    let selectedPokemon = null;
+
+    function showPokemonInfo(name, number, gender, imageUrl, type, height, weight, ability) {
+        document.getElementById("pokemonName").textContent = name;
+        document.getElementById("pokemonNumber").textContent = number;
+        document.getElementById("pokemonGender").textContent = gender;
+        const pokemonImage = document.getElementById("pokemonImage");
+        pokemonImage.src = imageUrl;
+        pokemonImage.style.display = 'block';
+
+        // 선택한 포켓몬 정보를 저장
+        selectedPokemon = { name, number, gender, imageUrl, type, height, weight, ability };
+    }
+
+    async function catchPokemon(id) {
+        try {
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+            const data = await response.json();
+            const speciesResponse = await fetch(data.species.url);
+            const speciesData = await speciesResponse.json();
+            const name = speciesData.names.find(n => n.language.name === 'ko')?.name || data.name;
+            const number = `No.${data.id.toString().padStart(3, '0')}`;
+            const gender = Math.random() < 0.5 ? '성별 : ♂' : '성별 : ♀';
+            const type = data.types[0].type.name;
+            const height = (data.height / 10).toFixed(1) + "m";
+            const weight = (data.weight / 10).toFixed(1) + "kg";
+            const ability = data.abilities[0].ability.name;
+
+            // 포켓몬 셀 생성
+            const pokemonCell = document.createElement('div');
+            pokemonCell.className = 'pokemonCell';
+            pokemonCell.onclick = function() {
+                showPokemonInfo(name, number, gender, data.sprites.front_default, type, height, weight, ability);
+            };
+
+            // 이미지 추가
+            const img = document.createElement('img');
+            img.src = data.sprites.front_default;
+            img.alt = name;
+            pokemonCell.appendChild(img);
+
+            // 저장 박스에 포켓몬 셀 추가
+            document.getElementById('storageBox').appendChild(pokemonCell);
+
+        } catch (error) {
+            alert("포켓몬 데이터를 불러올 수 없습니다.");
+        }
+    }
+
+    function viewDetails() {
+        if (selectedPokemon) {
+            viewDetail(
+                selectedPokemon.name,
+                selectedPokemon.number,
+                selectedPokemon.gender,
+                selectedPokemon.imageUrl,
+                selectedPokemon.type,
+                selectedPokemon.height,
+                selectedPokemon.weight
+            );
+            common.showView('pokeInfo');
+        } else {
+            alert("자세히 볼 포켓몬이 선택되지 않았습니다.");
+        }
+    }
+
+    catchPokemon(10);
+    catchPokemon(100);
+    catchPokemon(122);
+    catchPokemon(230);
+    catchPokemon(191);
+</script>

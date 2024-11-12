@@ -1,0 +1,91 @@
+<div id="field" class="sideView show">
+    <div class="btnBox">
+        <a onclick="common.showView('myPoke')">내가 잡은 포켓몬</a>
+        <a href="/signIn">로그아웃</a>
+    </div>
+    <div class="gameContainer">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </div>
+</div>
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // 캐릭터 이미지 로드
+    const characterImage = new Image();
+    characterImage.src = '/assets/image/pikachu.png'; // 캐릭터 이미지 경로
+
+    // 포켓볼 이미지 로드
+    const pokeballImage = new Image();
+    pokeballImage.src = '/assets/image/poketball.png'; // 포켓볼 이미지 경로
+
+    let characterX = 330;
+    let characterY = 250;
+    const characterWidth = 110;
+    const characterHeight = 138;
+
+    const pokeballWidth = 50;
+    const pokeballHeight = 50;
+    let pokeballX, pokeballY;
+    const keys = {
+        ArrowUp: false,
+        ArrowDown: false,
+        ArrowLeft: false,
+        ArrowRight: false,
+        Alt: false
+    };
+
+    function placePokeball() {
+        pokeballX = Math.random() * (canvas.width - pokeballWidth);
+        pokeballY = Math.random() * (canvas.height - pokeballHeight);
+    }
+
+    placePokeball();
+    gameLoop();
+
+    window.addEventListener('keydown', (e) => {
+        if (keys.hasOwnProperty(e.key)) {
+            keys[e.key] = true;
+        }
+    });
+
+    window.addEventListener('keyup', (e) => {
+        if (keys.hasOwnProperty(e.key)) {
+            keys[e.key] = false;
+        }
+    });
+
+    function gameLoop() {
+        const speed = 5;
+
+        if (keys.ArrowUp && characterY > 0) {
+            characterY -= speed;
+        }
+        if (keys.ArrowDown && characterY < canvas.height - characterHeight) {
+            characterY += speed;
+        }
+        if (keys.ArrowLeft && characterX > 0) {
+            characterX -= speed;
+        }
+        if (keys.ArrowRight && characterX < canvas.width - characterWidth) {
+            characterX += speed;
+        }
+
+        const dx = characterX + characterWidth / 2 - (pokeballX + pokeballWidth / 2);
+        const dy = characterY + characterHeight / 2 - (pokeballY + pokeballHeight / 2);
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Alt키 입력 시 포켓볼을 획득
+        if (keys.Alt && distance < 45) {
+            common.showView('battle');
+            placePokeball();
+            keys.Alt = false; // F키가 눌리면 다시 false로 설정
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(characterImage, characterX, characterY, characterWidth, characterHeight);
+        ctx.drawImage(pokeballImage, pokeballX, pokeballY, pokeballWidth, pokeballHeight);
+
+        requestAnimationFrame(gameLoop);
+    }
+</script>

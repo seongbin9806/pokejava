@@ -1,0 +1,509 @@
+/* sign */
+#sign {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: url(/assets/image/signBack.jpg) no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    user-select: none;
+}
+
+#sign .wrapper {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    backdrop-filter: blur(15px);
+    border: 1px solid white;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#sign .wrapper h2 {
+    font-size: 36px;
+    color: white;
+    margin: 40px;
+}
+
+#sign .login input,
+#sign .password input {
+    width: 70%;
+    height: 50px;
+    margin: 10px;
+    padding-left: 10px;
+    outline: none;
+    border: 1px solid white;
+    border-radius: 30px;
+    background: transparent;
+    color: white;
+    font-size: 15px;
+    padding-right: 50px;
+}
+
+#sign .login .usericon,
+#sign .password .lockicon {
+    position: relative;
+    color: white;
+    right: 45px;
+}
+
+::placeholder {
+    color: white;
+}
+
+.check span,
+.check a {
+    color: white;
+    margin: 20px;
+}
+
+.check input {
+    position: relative;
+    left: 15px;
+}
+
+#sign .loginbtn button {
+    width: 70%;
+    height: 50px;
+    border: 1px solid white;
+    background: white;
+    border-radius: 30px;
+    margin: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#sign .register span,
+#sign .register a {
+    color: white;
+    margin: 5px;
+}
+
+/* battle */
+#battle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#battle .screen {
+    width: 800px;
+    height: 600px;
+    background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/95297f250f9563193468f7969decc4f4.jpg-A4uxywwP5bhyk8hQlGAa3A4rt1yJPL.jpeg');
+    background-size: cover;
+    background-position: center;
+    border: 4px solid #2c1810;
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+#battle .pokemonArea {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 20px;
+}
+
+#battle .pokemon {
+    width: 180px;
+    height: 180px;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+#battle .pokemonName,
+#battle .captureRate {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: #2c1810;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#battle .pokemonName {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
+#battle .captureRate {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+}
+
+#battle .textBox {
+    background: rgba(255, 255, 255, 0.95);
+    color: #2c1810;
+    padding: 15px;
+    margin: 20px;
+    border: 2px solid #2c1810;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#battle .buttonBox,
+#battle .inputBox {
+    background: rgba(255, 255, 255, 0.9);
+    width: 100%;
+    display: flex;
+    height: 80px;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-top: 2px solid #2c1810;
+}
+
+#battle .inputBox {
+    display: none;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+#battle .inputBox input[type="text"] {
+    flex-grow: 1;
+    height: 40px;
+    margin-right: 15px;
+    padding: 0 15px;
+    border: 2px solid #2c1810;
+    border-radius: 20px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+    color: #000;
+}
+
+#battle .inputBox input[type="text"]:focus {
+    border-color: #4a76a8;
+    box-shadow: 0 0 0 2px rgba(74, 118, 168, 0.2);
+}
+
+#battle button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #4a76a8;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#battle button:hover {
+    background: #3a5f8a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+#battle button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+/* myPoke */
+#myPoke {
+    position: absolute;
+    right: 0;
+    right: 0;
+    background-color: #D8F0E1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    background-image: linear-gradient(
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2)
+    ), url('/assets/image/pokeBack.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+#myPoke .pokemonName {
+    font-size: 16px;
+}
+/* 포켓몬 박스 레이아웃 */
+#myPoke .storageBox {
+    display: grid;
+    grid-template-columns: repeat(6, 60px);
+    gap: 10px;
+    padding: 20px;
+    background-color: #A8DFE4;
+    border: 3px solid #4A91A0;
+    border-radius: 8px;
+    width: 400px;
+}
+
+/* 각 포켓몬 칸 스타일 */
+#myPoke .pokemonCell {
+    width: 60px;
+    height: 60px;
+    background-color: #C0E8E1;
+    border: 1px solid #7BA8A8;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* 포켓몬 이미지 스타일 */
+#myPoke .pokemonCell img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 사이드바 (포켓몬 상세 정보) */
+#myPoke .sidebar {
+    text-align: center;
+    margin-right: 20px;
+    background-color: #E1F7FC;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #4A91A0;
+    width: 150px;
+}
+
+/* 사이드바의 포켓몬 이미지 스타일 */
+#myPoke .sidebar img {
+    width: 100px;
+    height: auto;
+    margin: 0 auto 10px auto;
+    border: 4px solid #4A91A0;
+    border-radius: 8px;
+    padding: 4px;
+    background-color: white;
+}
+
+/* 버튼 스타일 */
+#myPoke button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #4A91A0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#myPoke button:hover {
+    background-color: #3a7a8c;
+}
+
+/* pokeInfo */
+#pokeInfo {
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e0f0ff;
+    background-image: linear-gradient(
+                rgba(0, 0, 0, 0.2),
+                rgba(0, 0, 0, 0.2)
+    ), url('/assets/image/infoBack.jpg');
+    background-size: cover;
+}
+
+#pokeInfo .trainerMemo {
+    width: 320px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid;
+    background: #fff;
+}
+
+#pokeInfo .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 2px solid;
+    padding-bottom: 5px;
+}
+
+#pokeInfo .pokemonInfo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#pokeInfo .pokemonImage {
+    width: 80px;
+    height: 80px;
+    background-color: #f0f8ff;
+    border: 2px solid;
+    margin-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #777;
+}
+
+#pokeInfo .pokemonDetails {
+    font-size: 16px;
+    color: #333;
+}
+
+#pokeInfo .pokemonDetails p {
+    margin: 5px 0;
+}
+
+#pokeInfo .backButton {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    padding: 8px;
+    background-color: #4A91A0;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#pokeInfo .backButton:hover {
+    background-color: #3a7a8c;
+}
+
+#question {
+    padding: 40px 50px;
+}
+
+#question .blank{
+    display: inline-block;
+    width: 100px; /* 너비 조절 가능 */
+    border-bottom: 1px solid black; /* 빈칸의 아랫줄을 표시 */
+}
+
+#question .inputWrap{
+    display: flex;
+}
+
+#question .inputWrap input{
+    width: calc(100% - 150px);
+    border: 1px solid #aeaeae;
+    border-radius: 5px;
+    color: #000;
+    padding-left: 20px;
+    margin-right: 20px;
+}
+
+#question .inputWrap button{
+    width: 150px;
+    padding: 10px 0;
+    border-radius: 5px;
+    background: #000;
+    color: #fff;
+}
+
+#field {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2)
+    ), url('/assets/image/fieldBack.jpg');
+    background-repeat: repeat; /* 이미지를 반복 */
+}
+
+#field .gameContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* background-image: url('./map.png'); 포켓몬 맵 이미지 경로 */
+    background-size: cover;
+}
+
+#field canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+#field .btnBox {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    z-index: 9;
+}
+
+#field .btnBox a {
+    letter-spacing: -1px;
+    background: #000000;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-right: 10px;
+
+}
+
+#field .btnBox a:nth-child(1){
+    background: #5252ff;
+}
+
+/* 기본 상태: 화면 오른쪽 밖에 위치 */
+.sideView {
+    position: absolute;
+    top: 0 !important;
+    right: -100%; /* 화면 밖으로 위치 */
+    width: 100%;  /* 전체 너비 */
+    height: 100%; /* 전체 높이 */
+    transition: right 0.5s ease-in-out; /* 오른쪽 위치 이동에 슬라이드 효과 추가 */
+}
+
+/* 'show' 클래스를 추가할 때, 화면 내로 들어오도록 */
+.sideView.show {
+    right: 0 !important;
+}
+
+/* hide 클래스를 추가할 때, 화면 밖으로 다시 나가도록 */
+.sideView.hideView {
+    right: -100% !important;
+}
