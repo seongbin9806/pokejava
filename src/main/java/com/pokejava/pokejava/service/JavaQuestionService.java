@@ -9,6 +9,7 @@ import com.pokejava.pokejava.repository.JavaQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,7 +59,7 @@ public class JavaQuestionService {
 
     @Transactional
     public ResponseDTO getAllJavaQuestion() {
-        List<JavaQuestion> javaQuestionList = (List<JavaQuestion>) javaQuestionRepository.findAll();
+        List<JavaQuestion> javaQuestionList = (List<JavaQuestion>) javaQuestionRepository.findAll(Sort.by(Sort.Order.desc("javaQuestionId")));
 
         return new ResponseDTO(true, "자바 퀴즈 가져오기 성공", javaQuestionList);
     }

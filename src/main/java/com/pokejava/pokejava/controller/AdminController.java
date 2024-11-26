@@ -4,6 +4,7 @@ import com.pokejava.pokejava.dto.JavaQuestionForm;
 import com.pokejava.pokejava.dto.MemberForm;
 import com.pokejava.pokejava.dto.ResponseDTO;
 import com.pokejava.pokejava.service.JavaQuestionService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,17 @@ public class AdminController {
     private com.pokejava.pokejava.service.JavaQuestionService JavaQuestionService;
 
     @GetMapping("/admin")
-    public String adminHome(Model model) {
+    public String adminHome(Model model, HttpSession session) {
+        Long memberId = (Long) session.getAttribute("memberId");
+
+        /* 1은 관리자 */
+        if (memberId == null || memberId != 1) {
+            // 로그인되지 않은 상태라면 signIn 페이지로 리다이렉트
+            return "redirect:/signIn";
+        }
+
+        model.addAttribute("javaQuestionList", JavaQuestionService.getAllJavaQuestion().getData());
+
         return "admin/home";
     }
 

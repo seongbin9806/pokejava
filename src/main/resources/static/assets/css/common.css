@@ -417,8 +417,21 @@
     display: flex;
 }
 
+#question .question {
+    width: calc(100%);
+    height: 40px;
+    border: 1px solid #aeaeae;
+    border-radius: 5px;
+    color: #000;
+    padding-left: 20px;
+    margin-right: 20px;
+}
+#question .inputWrap {
+    margin-bottom: 20px;
+}
+
 #question .inputWrap input{
-    width: calc(100% - 150px);
+    width: calc(200px);
     border: 1px solid #aeaeae;
     border-radius: 5px;
     color: #000;
