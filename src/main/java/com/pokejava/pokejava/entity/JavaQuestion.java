@@ -4,10 +4,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
 public class JavaQuestion {
     @Id
     @GeneratedValue
@@ -25,4 +29,11 @@ public class JavaQuestion {
 
     @Column
     private char isUse = 'Y';
+
+    public JavaQuestion(String title, String answer) {
+        this.title = title;
+        this.answer = answer;
+        this.regDate = LocalDateTime.now(); // regDate는 자동으로 현재 시간으로 설정
+    }
+
 }

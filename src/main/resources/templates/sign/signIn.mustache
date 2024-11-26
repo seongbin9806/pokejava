@@ -1,21 +1,23 @@
 {{>layouts/header}}
-<div id="sign">
-    <div class="wrapper">
-        <h2>로그인</h2>
-        <div class="login">
-            <input type="text" placeholder="Id"><i class="fas fa-user usericon"></i>
-        </div>
-        <div class="password">
-            <input type="password" placeholder="Password"><i class="fas fa-lock lockicon"></i>
-        </div>
+<form action="/sign/signIn" method="post">
+    <div id="sign">
+        <div class="wrapper">
+            <h2>로그인</h2>
+            <div class="login">
+                <input type="text" name="memberEmail" placeholder="Id"><i class="fas fa-user usericon"></i>
+            </div>
+            <div class="password">
+                <input type="password" name="memberPassword" placeholder="Password"><i class="fas fa-lock lockicon"></i>
+            </div>
 
-        <div class="loginbtn" onclick="location.href='/'">
-            <button>로그인</button>
-        </div>
+            <div class="loginbtn" onclick="location.href='/'">
+                <button>로그인</button>
+            </div>
 
-        <div class="register">
-            <a href="/signUp">회원가입</a>
+            <div class="register">
+                <a href="/signUp">회원가입</a>
+            </div>
         </div>
     </div>
-</div>
+</form>
 {{>layouts/footer}}
