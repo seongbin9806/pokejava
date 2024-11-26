@@ -1,6 +1,7 @@
 package com.pokejava.pokejava.controller;
 
 import com.pokejava.pokejava.service.PokemonService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +16,13 @@ public class MainController {
     private PokemonService pokemonService;
 
     @GetMapping("/")
-    public String home(Model model) {
-//        Random random = new Random();
-//        int id = random.nextInt(1010) + 1; // 1부터 1010 사이의 랜덤 ID 생성
-//        PokemonService.PokemonResponse pokemon = pokemonService.fetchPokemonData(id); // 포켓몬 데이터 가져오기
-//        model.addAttribute("pokemon", pokemon); // 모델에 포켓몬 정보 추가
+    public String home(Model model, HttpSession session) {
+        Long memberId = (Long) session.getAttribute("memberId");
+
+        if (memberId == null) {
+            // 로그인되지 않은 상태라면 signIn 페이지로 리다이렉트
+            return "redirect:/signIn";
+        }
 
         return "home"; // "home" 템플릿으로 이동
     }

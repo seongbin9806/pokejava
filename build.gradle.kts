@@ -25,9 +25,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	runtimeOnly("com.mysql:mysql-connector-j")
+	compileOnly("org.projectlombok:lombok:1.18.24")
+	annotationProcessor("org.projectlombok:lombok:1.18.24")
 }
 
 tasks.withType<Test> {
