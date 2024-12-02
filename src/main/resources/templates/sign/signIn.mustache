@@ -1,17 +1,17 @@
 {{>layouts/header}}
-<form action="/sign/signIn" method="post">
+<form onsubmit="signIn(event)" method="post">
     <div id="sign">
         <div class="wrapper">
             <h2>로그인</h2>
             <div class="login">
-                <input type="text" name="memberEmail" placeholder="Id"><i class="fas fa-user usericon"></i>
+                <input type="text" name="memberEmail" placeholder="Id" required><i class="fas fa-user usericon"></i>
             </div>
             <div class="password">
-                <input type="password" name="memberPassword" placeholder="Password"><i class="fas fa-lock lockicon"></i>
+                <input type="password" name="memberPassword" placeholder="Password" required><i class="fas fa-lock lockicon"></i>
             </div>
 
-            <div class="loginbtn" onclick="location.href='/'">
-                <button>로그인</button>
+            <div class="loginbtn">
+                <button type="submit">로그인</button>
             </div>
 
             <div class="register">
@@ -20,4 +20,28 @@
         </div>
     </div>
 </form>
+
+<script>
+    async function signIn(event) {
+        event.preventDefault();
+
+        let formData = new FormData(event.target);
+
+        const signInRes = await util.fetchJsonData('/sign/signIn', {
+            memberEmail: formData.get('memberEmail'),
+            memberPassword: formData.get('memberPassword')
+        });
+
+        if(!signInRes.result){
+            util.showToastMsg(signInRes.msg);
+            return;
+        }
+
+        if(formData.get('memberEmail') == "admin") {
+            location.href = "/admin";
+        }else {
+            location.href = "/";
+        }
+    }
+</script>
 {{>layouts/footer}}

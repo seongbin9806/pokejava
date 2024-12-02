@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AdminController {
 
     @Autowired
-    private com.pokejava.pokejava.service.JavaQuestionService JavaQuestionService;
+    private JavaQuestionService JavaQuestionService;
 
     @GetMapping("/admin")
     public String adminHome(Model model, HttpSession session) {
@@ -28,6 +28,7 @@ public class AdminController {
             return "redirect:/signIn";
         }
 
+        System.out.println(JavaQuestionService.getAllJavaQuestion().getData());
         model.addAttribute("javaQuestionList", JavaQuestionService.getAllJavaQuestion().getData());
 
         return "admin/home";

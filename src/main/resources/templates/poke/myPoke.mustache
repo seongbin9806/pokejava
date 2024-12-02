@@ -1,12 +1,12 @@
 <div id="myPoke" class="sideView hideView">
-    <div class="sidebar">
+    <div id="sidebar" class="sidebar hide">
         <h2 id="pokemonName">포켓몬 이름</h2>
         <img id="pokemonImage" src="" alt="포켓몬 이미지" style="display:none;">
         <p id="pokemonNumber">No.000</p>
-        <p id="pokemonGender">성별: 미정</p>
-        <button id="detailsButton" onclick="viewDetails()">자세히 보기</button>
-        <button onclick="releasePokemon()">놓아준다</button>
+        <p id="pokemonTypes"></p>
+        <button id="detailsButton" class="hide" onclick='viewDetails()'>자세히 보기</button>
         <button onclick="common.showView('field')">돌아가기</button>
+        <button id="releaseButton" onclick="releasePokemon()" style="margin-top: 20px; background: #ff6a6a;">놓아준다</button>
     </div>
 
     <!-- 포켓몬 저장 박스 -->
@@ -14,75 +14,55 @@
 </div>
 
 <script>
-    let selectedPokemon = null;
+    var myPokeList = {{#myPokeList}} {{{.}}} {{/myPokeList}};
+    console.log(myPokeList);
 
-    function showPokemonInfo(name, number, gender, imageUrl, type, height, weight, ability) {
-        document.getElementById("pokemonName").textContent = name;
-        document.getElementById("pokemonNumber").textContent = number;
-        document.getElementById("pokemonGender").textContent = gender;
-        const pokemonImage = document.getElementById("pokemonImage");
-        pokemonImage.src = imageUrl;
-        pokemonImage.style.display = 'block';
+    function addPoke(data, index) {
+        let pokeInfo = '';
 
-        // 선택한 포켓몬 정보를 저장
-        selectedPokemon = { name, number, gender, imageUrl, type, height, weight, ability };
+        pokeInfo = `<div class="pokemonCell" onclick="viewPoke(${index})">
+                        <img src="${data.imageUrl}" alt="${data.name}">
+                    </div>`;
+
+        $('#storageBox').append(pokeInfo);
     }
 
-    async function catchPokemon(id) {
-        try {
-            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-            const data = await response.json();
-            const speciesResponse = await fetch(data.species.url);
-            const speciesData = await speciesResponse.json();
-            const name = speciesData.names.find(n => n.language.name === 'ko')?.name || data.name;
-            const number = `No.${data.id.toString().padStart(3, '0')}`;
-            const gender = Math.random() < 0.5 ? '성별 : ♂' : '성별 : ♀';
-            const type = data.types[0].type.name;
-            const height = (data.height / 10).toFixed(1) + "m";
-            const weight = (data.weight / 10).toFixed(1) + "kg";
-            const ability = data.abilities[0].ability.name;
-
-            // 포켓몬 셀 생성
-            const pokemonCell = document.createElement('div');
-            pokemonCell.className = 'pokemonCell';
-            pokemonCell.onclick = function() {
-                showPokemonInfo(name, number, gender, data.sprites.front_default, type, height, weight, ability);
-            };
-
-            // 이미지 추가
-            const img = document.createElement('img');
-            img.src = data.sprites.front_default;
-            img.alt = name;
-            pokemonCell.appendChild(img);
-
-            // 저장 박스에 포켓몬 셀 추가
-            document.getElementById('storageBox').appendChild(pokemonCell);
-
-        } catch (error) {
-            alert("포켓몬 데이터를 불러올 수 없습니다.");
+    function MyPokeDefaultSetup() {
+        for(let index in myPokeList) {
+            addPoke(myPokeList[index], index);
         }
     }
 
-    function viewDetails() {
-        if (selectedPokemon) {
-            viewDetail(
-                selectedPokemon.name,
-                selectedPokemon.number,
-                selectedPokemon.gender,
-                selectedPokemon.imageUrl,
-                selectedPokemon.type,
-                selectedPokemon.height,
-                selectedPokemon.weight
-            );
-            common.showView('pokeInfo');
-        } else {
-            alert("자세히 볼 포켓몬이 선택되지 않았습니다.");
-        }
+    function viewPoke(index) {
+        let data = myPokeList[index];
+
+        $('#sidebar').removeClass('hide');
+        $('#pokemonName').text(data.name);
+        $('#pokemonImage').attr('src', data.imageUrl).show();
+        $('#pokemonNumber').text(`NO.${data.pokemonId}`);
+        $('#pokemonTypes').text(data.types);
+        $('#detailsButton')
+        .attr('onclick', `viewDetails('${data.name}', '${data.pokemonId}', '${data.imageUrl}', '${data.types}', '${data.height}', '${data.weight}')`)
+        .removeClass('hide');
+        $('#releaseButton').attr('onclick', `releasePokemon(${index})`);
     }
 
-    catchPokemon(10);
-    catchPokemon(100);
-    catchPokemon(122);
-    catchPokemon(230);
-    catchPokemon(191);
+    async function releasePokemon(index) {
+        let data = myPokeList[index];
+
+        const releasePokemonRes = await util.fetchJsonData('/poke/putMyPokemon', {
+            myPokemonId: data.myPokemonId
+        });
+
+        if(!releasePokemonRes.result) {
+            util.showToastMsg(releasePokemonRes.msg);
+            return;
+        }
+
+        $('.pokemonCell').eq(index).remove();
+        util.showToastMsg(`[${data.name}]을 놓아줬다!😢`, 'S');
+        $('#sidebar').addClass('hide');
+    }
+
+    MyPokeDefaultSetup();
 </script>

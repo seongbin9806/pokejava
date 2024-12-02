@@ -38,6 +38,7 @@ public class PokeController {
             Random random = new Random();
             int id = random.nextInt(1010) + 1; // 1부터 1010 사이의 랜덤 ID 생성
             PokemonService.PokemonResponse pokemon = pokemonService.fetchPokemonData(id); // 포켓몬 데이터 가져오기
+            pokemon.setPokemonId(id);
 
             return ResponseEntity.ok(new ResponseDTO(true, "포켓몬 정보 가져오기 성공", pokemon));
         } catch (Exception e) {
@@ -61,7 +62,7 @@ public class PokeController {
     public ResponseEntity<ResponseDTO> catchPokemon(Long pokemonId, HttpSession session) {
         try {
             Long memberId = (Long) session.getAttribute("memberId");
-            MyPokeForm myPokeForm = new MyPokeForm(pokemonId, memberId);
+            MyPokeForm myPokeForm = new MyPokeForm(memberId, pokemonId);
 
             ResponseDTO response = myPokeService.catchMyPokemon(myPokeForm);
             return ResponseEntity.ok(response); // HTTP 200 OK
@@ -72,9 +73,9 @@ public class PokeController {
     }
 
     @PostMapping("/poke/putMyPokemon")
-    public ResponseEntity<ResponseDTO> putMyPokemon(Long pokemonId) {
+    public ResponseEntity<ResponseDTO> putMyPokemon(Long myPokemonId) {
         try {
-            ResponseDTO response = myPokeService.putMyPokemon(pokemonId);
+            ResponseDTO response = myPokeService.putMyPokemon(myPokemonId);
             return ResponseEntity.ok(response); // HTTP 200 OK
         } catch (Exception e) {
             e.printStackTrace();

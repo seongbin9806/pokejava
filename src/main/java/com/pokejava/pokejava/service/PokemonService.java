@@ -66,9 +66,6 @@ public class PokemonService {
                                 List<String> types = namesTuple.getT1();
                                 List<String> abilities = namesTuple.getT2();
 
-                                logger.info("Fetched Pokemon (Korean): " + koreanName);
-                                logger.info("Constructed Image URL: " + imageUrl);
-
                                 return new PokemonResponse(koreanName, imageUrl, height, weight, types, abilities);
                             });
                 })
@@ -212,6 +209,8 @@ public class PokemonService {
         private final int weight;       // 무게
         private final List<String> types; // 속성 목록
         private final List<String> abilities; // 특성 목록
+        private int pokemonId;
+        private Long myPokemonId;
 
         public PokemonResponse(String name, String imageUrl, int height, int weight, List<String> types, List<String> abilities) {
             this.name = name;
@@ -245,6 +244,22 @@ public class PokemonService {
 
         public List<String> getAbilities() {
             return abilities;
+        }
+
+        public int getPokemonId() {
+            return pokemonId;
+        }
+
+        public void setPokemonId(int pokemonId) {
+            this.pokemonId = pokemonId;
+        }
+
+        public void setMyPokemonId(Long myPokemonId) {
+            this.myPokemonId = myPokemonId;
+        }
+
+        public Long getMyPokemonId() {
+            return myPokemonId;
         }
     }
 }
