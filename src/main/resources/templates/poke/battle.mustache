@@ -1,55 +1,90 @@
 <div id="battle" class="sideView hideView">
     <div class="screen">
-        <div class="captureRate">포획률: 0%</div>
+<!--        <div class="captureRate">포획률: 0%</div>-->
         <div class="pokemonArea">
-            <img class="pokemon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png" alt="포획할 포켓몬">
-            <div class="pokemonName">라이츄</div>
+            <img id="pokeImage" class="pokemon" src="" alt="포획할 포켓몬">
+            <div id="battlePokeName" class="pokemonName">라이츄</div>
         </div>
-        <div class="textBox">
+        <div id="textBox" class="textBox">
             야생의 라이츄가 나타났다!
         </div>
-        <div class="buttonBox">
-            <button onclick="showInputField()">문제를 푼다</button>
-            <button onclick="runAway()">도망간다</button>
+        <div id="buttonBox" class="buttonBox">
+            <button onclick="tryQuestion()">문제를 푼다</button>
+            <button onclick="runBattle()">도망간다</button>
         </div>
-        <div class="inputBox">
-            <input type="text" id="answerInput" placeholder="답을 입력하세요">
-            <button onclick="checkAnswer()">입력</button>
+        <div id="questionBox" class="inputBox hide">
+            <input type="text" id="answer" placeholder="답을 입력하세요">
+            <button onclick="finishAnswer()">입력</button>
         </div>
     </div>
 </div>
 
 <script>
-    let captureRate = 0;
-    let correctAnswers = 0;
+    var questionData = {},
+        pokemonData = {},
+        isAnswer = false;
 
-    function showInputField() {
-        document.querySelector('.buttonBox').style.display = 'none';
-        document.querySelector('.inputBox').style.display = 'flex';
-        document.querySelector('.textBox').textContent = '문제: 라이츄의 진화 전 포켓몬은?';
+    function settingPokemon(data) {
+        pokemonData = data;
+
+        $('#pokeImage').attr('src', data.imageUrl);
+        $('#battlePokeName').text(data.name);
+        $('#textBox').html(`야생의 ${data.name}가 나타났다!`);
+        $('#buttonBox').removeClass('hide');
+        $('#questionBox').addClass('hide');
+        common.showView('battle');
     }
 
-    function runAway() {
-        document.querySelector('.textBox').textContent = '무사히 도망쳤다!';
-        common.showView('field');
+    function settingQuestion(data) {
+        isAnswer = false;
+        questionData = data;
     }
 
-    function checkAnswer() {
-        const userAnswer = document.getElementById('answerInput').value.toLowerCase();
-        if (userAnswer === '피카츄') {
-            correctAnswers++;
-            captureRate = Math.min(100, correctAnswers * 25);
-            document.querySelector('.captureRate').textContent = `포획률: ${captureRate}%`;
-            document.querySelector('.textBox').textContent = '정답! 피카츄가 라이츄로 진화합니다.';
+    function tryQuestion() {
+        $('#textBox').text(questionData.title);
+        $('#answer').val('').focus();
 
+        $('#buttonBox').addClass('hide');
+        $('#questionBox').removeClass('hide');
+    }
+
+    async function finishAnswer() {
+        if(isAnswer) return;
+
+        let $answer = $('#answer'),
+            $battlePokeName = $('#battlePokeName');
+
+        isAnswer = true;
+
+        if($answer.val() == questionData.answer) {
+            const getRandomPokeRes = await util.fetchJsonData('/poke/catchPokemon', {
+                pokemonId: pokemonData.pokemonId
+            });
+
+            if(!getRandomPokeRes.result) {
+                util.showToastMsg(getRandomPokeRes.msg);
+                common.showView('field');
+                return;
+            }
+
+            util.showToastMsg(`[${$battlePokeName.text()}]를 포획했다!`, "S");
+
+            pokemonData.myPokemonId = getRandomPokeRes.data;
+            myPokeList.push(pokemonData);
+
+            let index = myPokeList.length - 1;
+            addPoke(myPokeList[index], index);
+
+            common.showView('field');
+        }else {
+            util.showToastMsg(`정답은 [${questionData.answer}]였다! 포켓몬이 도망갔다!`);
             setTimeout(() => {
               common.showView('field');
-            }, 2500);
-        } else {
-            document.querySelector('.textBox').textContent = '틀렸습니다. 다시 시도해보세요.';
+            }, "1000");
         }
-        document.querySelector('.inputBox').style.display = 'none';
-        document.querySelector('.buttonBox').style.display = 'flex';
-        document.getElementById('answerInput').value = '';
+    }
+
+    function runBattle() {
+        common.showView('field');
     }
 </script>

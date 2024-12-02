@@ -5,7 +5,7 @@
     <h3>질문등록</h3>
     <br>
 
-    <form action="/admin/createJavaQuestion" method="post">
+    <form onsubmit="createJavaQuestion(event)" method="post">
         <h4>질문</h4>
         <input type="text" name="title" class="question" placeholder="질문을 입력하세요." required>
 
@@ -17,11 +17,55 @@
     </form>
 
     {{#javaQuestionList}}
-        <h4>{{title}}</h4> <!-- 각 질문의 title 출력 -->
+        <h4>
+            <i class="fas fa-times" onclick="deleteJavaQuestion({{javaQuestionId}})"></i>
+            {{title}}
+        </h4> <!-- 각 질문의 title 출력 -->
         <p>{{answer}}</p> <!-- 각 질문의 answer 출력 -->
         <hr/> <!-- 구분선 -->
     {{/javaQuestionList}}
 
 </div>
+
+<script>
+    async function createJavaQuestion(event) {
+        event.preventDefault();
+
+        let formData = new FormData(event.target);
+
+        const createJavaQuestionRes = await util.fetchJsonData('/admin/createJavaQuestion', {
+            title: formData.get('title'),
+            answer: formData.get('answer')
+        });
+
+        if(!createJavaQuestionRes.result){
+            util.showToastMsg(sendChatRes.msg);
+            return;
+        }
+
+        util.showAlert("질문이 등록되었습니다")
+        .then(() => {
+            location.reload();
+        });
+    }
+
+    async function deleteJavaQuestion(javaQuestionId) {
+        if(!confirm("해당 질문을 삭제하시겠습니까?")) return;
+
+         const deleteJavaQuestionRes = await util.fetchJsonData('/admin/deleteJavaQuestion', {
+            javaQuestionId: javaQuestionId
+        });
+
+        if(!deleteJavaQuestionRes.result){
+            util.showToastMsg(deleteJavaQuestionRes.msg);
+            return;
+        }
+
+        util.showAlert("질문이 삭제되었습니다")
+        .then(() => {
+            location.reload();
+        });
+    }
+</script>
 
 {{>layouts/footer}}

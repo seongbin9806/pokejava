@@ -185,7 +185,6 @@
 }
 
 #battle .inputBox {
-    display: none;
     padding: 0 20px;
     box-sizing: border-box;
 }
@@ -264,7 +263,7 @@
     background-color: #A8DFE4;
     border: 3px solid #4A91A0;
     border-radius: 8px;
-    width: 400px;
+    width: 460px;
 }
 
 /* 각 포켓몬 칸 스타일 */
@@ -294,7 +293,7 @@
     padding: 20px;
     border-radius: 8px;
     border: 2px solid #4A91A0;
-    width: 150px;
+    width: 250px;
 }
 
 /* 사이드바의 포켓몬 이미지 스타일 */
@@ -447,6 +446,11 @@
     color: #fff;
 }
 
+#question .fa-times {
+    color:red;
+    margin-right: 5px;
+    cursor: pointer;
+}
 #field {
     margin: 0;
     display: flex;

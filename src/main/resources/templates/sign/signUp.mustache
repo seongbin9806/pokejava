@@ -1,24 +1,52 @@
 {{>layouts/header}}
 
-<form action="/sign/signUp" method="post">
+<form onsubmit="signUp(event)" method="post">
     <div id="sign">
         <div class="wrapper">
             <h2>회원가입</h2>
             <div class="login">
-                <input type="email" name="memberEmail" placeholder="Id"><i class="fas fa-user usericon"></i>
+                <input type="email" name="memberEmail" placeholder="Id" required><i class="fas fa-user usericon"></i>
             </div>
             <div class="password">
-                <input type="password" name="memberPassword" placeholder="Password"><i class="fas fa-lock lockicon"></i>
+                <input type="password" name="memberPassword" placeholder="Password" required><i class="fas fa-lock lockicon"></i>
             </div>
 
             <div class="password">
-                <input type="password" placeholder="RePassword"><i class="fas fa-lock lockicon"></i>
+                <input type="password" name="memberRePassword" placeholder="RePassword" required><i class="fas fa-lock lockicon"></i>
             </div>
 
             <div class="loginbtn">
-                <button>회원가입</button>
+                <button type="submit">회원가입</button>
             </div>
         </div>
     </div>
 </form>
+
+<script>
+    async function signUp(event) {
+        event.preventDefault();
+
+        let formData = new FormData(event.target);
+
+        if(formData.get('memberPassword') != formData.get('memberRePassword')) {
+            util.showToastMsg("비밀번호가 일치하지 않습니다");
+            return;
+        }
+
+        const signUpRes = await util.fetchJsonData('/sign/signUp', {
+            memberEmail: formData.get('memberEmail'),
+            memberPassword: formData.get('memberPassword')
+        });
+
+        if(!signUpRes.result){
+            util.showToastMsg(signUpRes.msg);
+            return;
+        }
+
+        util.showAlert("회원가입이 완료되었습니다")
+        .then(() => {
+            location.href = "/";
+        });
+    }
+</script>
 {{>layouts/footer}}
