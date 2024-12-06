@@ -1,4 +1,3 @@
 *.css linguist-detectable=false
-*.Js linguist-detectable=false 
-*.Mustache linguist-detectable=false
-*.CSS linguist-detectable=false
+*.js linguist-detectable=false 
+*.mustache linguist-detectable=false
